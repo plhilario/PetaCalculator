@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel = "stylesheet" type = "text/css" href = "Style.css">
+	<title>Calculator Layout</title><base>
+</head>
+<body>
+<div class = "jumbotron jumbotron-fluid bg-warning">
+	<br>
+	<h1 class = "Display-1">CALCULATOR LAYOUT</h1><br>
+	<h2 class = "lead">PARIS HILARIO</h2>
+	</div>
+	<hr>
+		<table>
+		<tr>
+			<td colspan = "4"><input class = "m-2" id = "box" disabled></td>
+		</tr>
+		<tr>
+			<td><button class = "btn btn-outline-primary font-italic m-2" onclick = "clearAll()">CA</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "delBack()">Del</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('/')">/</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('*')">*</button></td>
+		</tr>
+		<tr>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('7')">7</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('8')">8</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('9')">9</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('-')">-</button></td>
+		</tr>
+		<tr>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('4')">4</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('5')">5</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('6')">6</button></td>
+			<td><button class = "btn btn-outline-primary m-2"  onclick = "AddValue('+')">+</button></td>
+		</tr>
+		<tr>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('1')">1</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('2')">2</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('3')">3</button></td>
+			<td rowspan = "2"><button class = "btn btn-outline-primary m-2" onclick = "solve()" id = "btn">=</button></td>
+		</tr>
+		<tr>
+			<td colspan = "2"><button class = "btn btn-outline-primary m-2"  onclick = "AddValue('0')" id = "btn2">0</button></td>
+			<td><button class = "btn btn-outline-primary m-2" onclick = "AddValue('.')">.</button></td>
+		</tr>
+	</table>
+	</body>
+	<script src = "calculator.js"></script>
+</html>

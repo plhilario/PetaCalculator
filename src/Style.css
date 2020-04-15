@@ -1,0 +1,32 @@
+
+	body {
+		text-align: center;
+	}
+	
+	table {
+		border-style: solid;
+		border-color: black;
+		padding: 150px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	button {
+		width: 50px;
+		height: 50px;	
+	}
+	
+	#btn {
+		height: 125px;		
+	}
+	
+	#btn2 {
+		width: 105px;
+	}
+	
+	input {
+		width: 210px;
+		height: 50px;
+		margin-bottom: 5px;
+		border-style: outset;
+	}
