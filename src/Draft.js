@@ -8,7 +8,10 @@ let operators = [ "*", "/", "+", "-" ]; // an array used to iterate the paramete
 let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // an array used to iterate the parameter val in a function.
 // add operands, operators, or decimal points
 function AddValue(val) {
-	if (isOperand(val)) {
+	
+	if (expression.value.length >= 15) {
+		alert("Exceeded amount of characters reached! Only 15 characters allowed.")
+	} else if (isOperand(val)) {
 		expression.value += val;
 		operatorMode = false;
 	} else if (isOperator(val) && !operatorMode) {
@@ -24,10 +27,6 @@ function AddValue(val) {
 // displays the answer for the evaluated expression by the solve function
 function display(answer) {
 	expression.value = answer;
-	if(answer.includes(".")) {
-		decimalMode = false;
-		operatorMode = false;
-	}
 }
 // clears all operands, operators, and decimal points from the input box
 function clearAll() {
@@ -40,8 +39,9 @@ function delBack() {
 	let currentDisplayValue = expression.value;
 	let lastCharAfterDelete = currentDisplayValue.substr(currentDisplayValue.length - 2, 1);
 	if (isOperand(lastCharAfterDelete)) {
-		deleteLastCharacter(currentDisplayValue);
+		let newDisplay = deleteLastCharacter(currentDisplayValue);
 		operatorMode = false;
+		decimalMode = computeIfDecimalMode(newDisplay);
 	} else if (isOperator(lastCharAfterDelete)) {
 		deleteLastCharacter(currentDisplayValue);
 		operatorMode = true;
@@ -49,7 +49,7 @@ function delBack() {
 	} else if (isDecimalPoint(lastCharAfterDelete)) {
 		deleteLastCharacter(currentDisplayValue);
 		decimalMode = false;
-		operatorMode = true;
+		operatorMode = false;
 	}
 }
 // evaluates the expression
@@ -72,16 +72,31 @@ function isOperator(value) {
 }
 
 function isOperand(value) {
-
 	return operands.includes(value);
 }
 
 function isDecimalPoint(value) {
-
 	return value == ".";
 }
 
 function deleteLastCharacter(value) {
 	let del = value.substr(0, value.length - 1);
 	expression.value = del;
+	
+	return del;
+}
+
+function computeIfDecimalMode(value) {
+	let decimalCount = 0;
+	for (i=value.length-1; i>=0; i--) {
+		let evalChar = value.substr(i,1);
+		if (evalChar == ".") {
+			decimalCount++;
+		} else if (evalChar == "+" || evalChar == "-" || evalChar == "*" || evalChar == "/") {
+			break;
+		}
+	}
+	
+	if (decimalCount <= 0) return true;
+	else return false;
 }
