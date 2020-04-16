@@ -85,7 +85,7 @@ function deleteLastCharacter(value) {
 	
 	return del;
 }
-// 
+// counts the number of decimal points in the number to avoid duplicate decimal points.
 function computeIfDecimalMode(value) {
 	let decimalCount = 0;
 	for (i=value.length-1; i>=0; i--) {
