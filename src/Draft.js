@@ -1,102 +1,87 @@
-let operatorMode = true;
-let decimalMode = false;
-let operators = [ "*", "/", "+", "-" ];
-let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ];
-let decimal = [ "." ];
-let expression = document.getElementById("box");
-
-// add operands or operators
-	function AddValue(val) {
-		 /* iterate the characters in the string to check if it is a decimal point,
-		 * operand, or operator
-		 */
-		for (i = 0; i < 10; i++) {
-			if (expression.value.length >= 15) {
-				alert("There is no more space for the calculator!");
-			} else if (expression.value.length >= 14 && val == operators[i]) {
-				alert("There is no more space for the calculator!");
-			} else if (expression.value.length >= 14 && val == decimal[i]) {
-				alert("There is no more space for the calculator!");
-			} else if (val == operands[i]) {
-				expression.value += val;
-				operatorMode = false;
-			} else if (val == operators[i] && operatorMode == false) {
-				expression.value += val;
-				operatorMode = true;
-				decimalMode = false;
-			} else if (val == decimal[i] && decimalMode == false) {
-				expression.value += val;
-				operatorMode = true;
-				decimalMode = true;
-		}
-	}
-	}
-// clears all operators and operands
-	function clearAll() {
-		expression.value = "";
-	}
-// deletes one character from the string
-	function delBack() {
-		let string = expression;
-		let lastChar = string.substr(string.length - 1); // this is to determinethe type of character that is being deleted.
-		let del = string.substr(0, lastChar); // this will delete the last
-											// character in the string.
-	for (i = 0; i < 10; i++) {
-		if (lastChar == operands[i]
-				&& lastChar.substr(lastChar.length - 1) == operands[i]) {
-			expression = del;
-			operatorMode = false;
-			let selectDecimal = string.substr(string.lastIndexOf(operators[i]),lastChar); // last known operator to last character in the string
-			let decimalPoint = selectDecimal.indexOf("."); // this is to select this is to select whether it is safe to implement a decimal point or not (to avoid duplication in the string.)
-			if (decimalPoint != -1) {
-				decimalMode = true;
-			} else if (decimalPoint == -1) {
-				decimalMode = false;
-			}
-		} else if (lastChar == operands[i]
-				&& lastChar.substr(lastChar.length - 1) == operators[i]) {
-			expression = del;
-			operatorMode = true;
-			decimalMode = false;
-		} else if (lastChar == operands[i]
-				&& lastChar.substr(lastChar.length - 1) == decimal[i]) {
-			expression = del;
-			operatorMode = true;
-			decimalMode = true;
-		} else if (lastChar == operators[i]) {
-			expression = del;
-			operatorMode = false;
-			let selectDecimal = string.substr(string.lastIndexOf(operators[i]),
-					lastChar); // last known operator to last charcater in the string.
-			let decimalPoint = selectDecimal.indexOf("."); // this is to select this is to select whether it is safe to implement a decimal point or not (to avoid duplication in the string.)
-			if (decimalPoint != -1) {
-				decimalMode = true;
-			} else if (decimalPoint == -1) {
-				decimalMode = false;
-			}
-		} else if (lastChar == decimal[i]
-				&& lastChar.substr(lastChar.length - 1) == operands[i]) {
-			expression = del;
-			operatorMode = false;
-			decimalMode = false;
-		} else if (lastChar == decimal[i]
-				&& lastChar.substr(lastChar.length - 1) == operators[i]) {
-			expression = del;
-			operatorMode = true;
-			decimalMode = false;
-		}
+let operatorMode = true; // to check if the expression can accept an operator
+let decimalMode = true; // to allow or not allow the decimal point to be placed
+let expression = document.getElementById("box"); // this is where the values
+													// of the operators,
+													// operands, and decimal
+													// points get added to.
+let operators = [ "*", "/", "+", "-" ]; // an array used to iterate the parameter val.
+let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // an array used to iterate the parameter val in a function.
+// add operands, operators, or decimal points
+function AddValue(val) {
+	if (isOperand(val)) {
+		expression.value += val;
+		operatorMode = false;
+	} else if (isOperator(val) && !operatorMode) {
+		expression.value += val;
+		operatorMode = true;
+		decimalMode = true;
+	} else if (isDecimalPoint(val) && decimalMode) {
+		expression.value += val;
+		decimalMode = false;
+		operatorMode = true;
 	}
 }
-// Get the variable and insert in input box
-	function display(val) {
-		expression.value = val;
+// displays the answer for the evaluated expression by the solve function
+function display(answer) {
+	expression.value = answer;
+	if(answer.includes(".")) {
+		decimalMode = false;
+		operatorMode = false;
 	}
-// solves the string
-	function solve() {
-		if (operatorMode == true) {
-			alert("The string cannot be evaluated because the string is open!")
-		} else {
-			display(eval(expression.value));
-			operatorMode = true;
-		}
+}
+// clears all operands, operators, and decimal points from the input box
+function clearAll() {
+	expression.value = "";
+	operatorMode = true;
+	decimalMode = true;
+}
+// Backspace Function
+function delBack() {
+	let currentDisplayValue = expression.value;
+	let lastCharAfterDelete = currentDisplayValue.substr(currentDisplayValue.length - 2, 1);
+	if (isOperand(lastCharAfterDelete)) {
+		deleteLastCharacter(currentDisplayValue);
+		operatorMode = false;
+	} else if (isOperator(lastCharAfterDelete)) {
+		deleteLastCharacter(currentDisplayValue);
+		operatorMode = true;
+		decimalMode = true;
+	} else if (isDecimalPoint(lastCharAfterDelete)) {
+		deleteLastCharacter(currentDisplayValue);
+		decimalMode = false;
+		operatorMode = true;
 	}
+}
+// evaluates the expression
+function solve() {
+	let str = expression.value;
+	let lastChar = str.substr(str.length - 1);
+	if(lastChar == ".") {
+		alert("There is a decimal point in the end!");
+	} else if (operatorMode) {
+		alert("There is an operator at the end!");
+	} else {
+		display(eval(expression.value))
+		operatorMode = true;
+		decimalMode = true;
+	}
+}
+
+function isOperator(value) {
+	return operators.includes(value);
+}
+
+function isOperand(value) {
+
+	return operands.includes(value);
+}
+
+function isDecimalPoint(value) {
+
+	return value == ".";
+}
+
+function deleteLastCharacter(value) {
+	let del = value.substr(0, value.length - 1);
+	expression.value = del;
+}
