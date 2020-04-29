@@ -4,11 +4,15 @@
 	}
 	
 	table {
-		border-style: solid;
-		border-color: black;
-		padding: 150px;
 		margin-left: auto;
 		margin-right: auto;
+	}
+	
+	tbody {
+		border-style: solid;
+		border-color: black;
+		border-width: medium;
+		width: 100%;
 	}
 	
 	button {
@@ -29,4 +33,52 @@
 		height: 50px;
 		margin-bottom: 5px;
 		border-style: outset;
+	}
+	
+	.btn-secondary {
+		background-color: #EDEFF1 !important;
+	}
+	
+	.btn-secondary:hover {
+		background-color: #D8DADC !important;
+	}
+	
+	.btn-clear-all {
+		background-color: #EDEFF1 !important;
+	}
+	
+	.btn-clear-all:hover {
+		background-color: #EF4141 !important;
+		color: white !important;
+	}
+	
+	.btn-del {
+		background-color: #EDEFF1 !important;
+	}
+	
+	.btn-del:hover {
+		background-color: tomato !important;
+		color: white !important;
+	}
+	
+	.btn-operator {
+		background-color: #EDEFF1 !important;
+	}
+	
+	.btn-operator:hover {
+		background-color: MediumSeaGreen !important;
+		color: white !important;
+	}
+	
+	.btn-equals {
+		background-color: #EDEFF1 !important;
+	}
+	
+	.btn-equals:hover {
+		background-color: Dodgerblue !important;
+		color: white !important;
+	}
+	
+	.font-weight-bold {
+		font-size: 22px;
 	}

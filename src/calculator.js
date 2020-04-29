@@ -10,7 +10,7 @@ let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // an array
 function addValue(val) {
 	
 	if (expression.value.length >= 15) {
-		alert("Exceeded amount of characters reached! Only 15 characters allowed.")
+		alert("Exceeded amount of characters reached! Only 15 characters allowed.");
 	} else if (isOperand(val)) {
 		expression.value += val;
 		operatorMode = false;
