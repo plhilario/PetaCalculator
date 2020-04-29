@@ -56,11 +56,11 @@ function solve() {
 	let lastChar = str.substr(str.length - 1);
 	if(lastChar == ".") {
 		alert("There is a decimal point in the end!");
-	} else if (operatorMode) {
+	} else if (isOperator(lastChar)) {
 		alert("There is an operator at the end!");
 	} else {
 		display(eval(expression.value))
-		operatorMode = true;
+		operatorMode = false;	
 		decimalMode = true;
 	}
 }
