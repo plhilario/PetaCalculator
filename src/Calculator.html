@@ -9,13 +9,15 @@
 <div class = "jumbotron jumbotron-fluid bg-warning">
 	<br>
 	<h1 class = "Display-1">CALCULATOR LAYOUT</h1><br>
-	<h2 class = "lead">PARIS HILARIO</h2>
+	<h2 class = "lead">PARIS L. HILARIO</h2>
 	</div>
 	<hr>
-	<table class = "shadow-sm-lg">
+	<div class = "row">
+	<div class = "col col-6">
+	<table class = "shadow-lg">
 		<tbody>
 			<tr>
-				<td colspan = "4"><input class = "m-2 font-weight-bold" id = "box" disabled></td>
+				<td colspan = "4"><input class = "shadow-sm m-2 font-weight-bold" id = "box" disabled></td>
 			</tr>
 			<tr>
 				<td><button class = "btn btn-clear-all border-0 shadow-sm font-italic m-1 text-dark" onclick = "clearAll()">CA</button></td>
@@ -43,10 +45,28 @@
 			</tr>
 			<tr>
 				<td colspan = "2"><button class = "btn btn-secondary border-0 shadow-sm m-1 text-dark"  onclick = "addValue('0')" id = "btn2">0</button></td>
-				<td><button class = "btn btn-secondary border-0 m-1 text-dark" onclick = "addValue('.')">.</button></td>
+				<td><button class = "btn btn-decimal border-0 m-1 text-dark" onclick = "addValue('.')">.</button></td>
 			</tr>
 		</tbody>
 	</table>
+	</div>
+	<div class = "col-6 features font-italic">
+		<h2>Functional Features:</h2>
+		<ol class = "list">
+			<li>Does not allow pressing of operator multiple times.</li>
+			<li>Does not allow pressing of decimal point multiple times.</li>
+			<li>Does not allow 15 characters in expression.</li>
+			<li>Will not compute expression if the last character is an operator.</li>
+			<li>Will not compute expression if the last character is a decimal point.</li>
+			<li>Del button keeps track of the expression's state.</li>
+		</ol>
+		<h2>Cosmetic Features:</h2>
+		<ol class = "list">	
+			<li>When cursor hovers over specific buttons, there will be a change in color.</li>
+			<li>There are shadows over the buttons.</li>
+		</ol>
+	</div>
+	</div>
 	</body>
 	<script src = "calculator.js"></script>
 </html>

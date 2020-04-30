@@ -5,7 +5,6 @@
 	
 	table {
 		margin-left: auto;
-		margin-right: auto;
 	}
 	
 	tbody {
@@ -17,7 +16,8 @@
 	
 	button {
 		width: 50px;
-		height: 50px;	
+		height: 50px;
+		background-color: #EDEFF1 !important;	
 	}
 	
 	#btn {
@@ -35,16 +35,12 @@
 		border-style: outset;
 	}
 	
-	.btn-secondary {
-		background-color: #EDEFF1 !important;
+	.features {
+		text-align: justify !important;
 	}
 	
 	.btn-secondary:hover {
 		background-color: #D8DADC !important;
-	}
-	
-	.btn-clear-all {
-		background-color: #EDEFF1 !important;
 	}
 	
 	.btn-clear-all:hover {
@@ -52,17 +48,9 @@
 		color: white !important;
 	}
 	
-	.btn-del {
-		background-color: #EDEFF1 !important;
-	}
-	
 	.btn-del:hover {
 		background-color: tomato !important;
 		color: white !important;
-	}
-	
-	.btn-operator {
-		background-color: #EDEFF1 !important;
 	}
 	
 	.btn-operator:hover {
@@ -70,15 +58,20 @@
 		color: white !important;
 	}
 	
-	.btn-equals {
-		background-color: #EDEFF1 !important;
-	}
-	
 	.btn-equals:hover {
 		background-color: Dodgerblue !important;
 		color: white !important;
 	}
 	
+	.btn-decimal:hover {
+		background-color: #17a2b8 !important;
+		color: white !important;s
+	}
+	
 	.font-weight-bold {
 		font-size: 22px;
+	}
+	
+	.list {
+		font-size: 18px;
 	}

@@ -1,12 +1,19 @@
+//
+// Author: Paris Hilario (c) 2020
+//
+
 let operatorMode = true; // to check if the expression can accept an operator
 let decimalMode = true; // to allow or not allow the decimal point to be placed
-let expression = document.getElementById("box"); // this is where the values
+let expression = document.getElementById("box"); // this is the placeholder where the values
 													// of the operators,
 													// operands, and decimal
 													// points get added to.
-let operators = [ "*", "/", "+", "-" ]; // an array used to iterate the parameter val.
-let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // an array used to iterate the parameter val in a function.
+let operators = [ "*", "/", "+", "-" ]; // valid operator values.
+let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // valid operand values.
+
+//
 // add operands, operators, or decimal points
+//
 function addValue(val) {
 	
 	if (expression.value.length >= 15) {
@@ -24,17 +31,26 @@ function addValue(val) {
 		operatorMode = true;
 	}
 }
+
+//
 // displays the answer for the evaluated expression by the solve function
+//
 function display(answer) {
 	expression.value = answer;
 }
+
+//
 // clears all operands, operators, and decimal points from the input box
+//
 function clearAll() {
 	expression.value = "";
 	operatorMode = true;
 	decimalMode = true;
 }
+
+//
 // Backspace Function
+//
 function delBack() {
 	let currentDisplayValue = expression.value;
 	let newDisplay = deleteLastCharacter(currentDisplayValue);
@@ -50,7 +66,10 @@ function delBack() {
 		operatorMode = false;
 	}
 }
+
+//
 // evaluates the expression
+//
 function solve() {
 	let str = expression.value;
 	let lastChar = str.substr(str.length - 1);
@@ -61,31 +80,44 @@ function solve() {
 	} else {
 		display(eval(expression.value))
 		operatorMode = false;	
-		decimalMode = true;
+		decimalMode = false;
 	}
 }
 
-// checks if the added value is an operator
+//
+// checks if value is an operator
+//
 function isOperator(value) {
 	return operators.includes(value);
 }
-// checks if the added value is an operand
+
+//
+// checks if value is an operand
+//
 function isOperand(value) {
 	return operands.includes(value);
 }
-// checks if the added value is a decimal point
+
+//
+// checks if value is a decimal point
+//
 function isDecimalPoint(value) {
 	return value == ".";
 }
 
+//
 // deletes the last character of the string
+//
 function deleteLastCharacter(value) {
 	let del = value.substr(0, value.length - 1);
 	expression.value = del;
 	
 	return del;
 }
+
+//
 // counts the number of decimal points in the number to avoid duplicate decimal points.
+//
 function computeIfDecimalMode(value) {
 	let decimalCount = 0;
 	for (i=value.length-1; i>=0; i--) {
