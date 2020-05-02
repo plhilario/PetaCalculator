@@ -4,7 +4,7 @@
 	}
 	
 	table {
-		margin-left: auto;
+		margin:auto;
 	}
 	
 	tbody {
@@ -17,7 +17,8 @@
 	button {
 		width: 50px;
 		height: 50px;
-		background-color: #EDEFF1 !important;	
+		background-color: #EDEFF1 !important;
+		color: black !important;	
 	}
 	
 	#btn {
@@ -37,6 +38,12 @@
 	
 	.features {
 		text-align: justify !important;
+		margin: auto;
+	}
+	
+	.memory-buttons:hover {
+		background-color: #4151EF !important;
+		color: white !important;
 	}
 	
 	.btn-secondary:hover {

@@ -1,6 +1,6 @@
-//
-// Author: Paris Hilario (c) 2020
-//
+/*
+ * Author: Paris Hilario (c) 2020
+ */
 
 let operatorMode = true; // to check if the expression can accept an operator
 let decimalMode = true; // to allow or not allow the decimal point to be placed
@@ -11,9 +11,9 @@ let expression = document.getElementById("box"); // this is the placeholder wher
 let operators = [ "*", "/", "+", "-" ]; // valid operator values.
 let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // valid operand values.
 
-//
-// add operands, operators, or decimal points
-//
+/*
+ * add operands, operators, or decimal points
+ */
 function addValue(val) {
 	
 	if (expression.value.length >= 15) {
@@ -32,25 +32,25 @@ function addValue(val) {
 	}
 }
 
-//
-// displays the answer for the evaluated expression by the solve function
-//
+/*
+ * displays the answer for the evaluated expression by the solve function
+ */
 function display(answer) {
 	expression.value = answer;
 }
 
-//
-// clears all operands, operators, and decimal points from the input box
-//
+/*
+ * clears all operands, operators, and decimal points from the input box
+ */
 function clearAll() {
 	expression.value = "";
 	operatorMode = true;
 	decimalMode = true;
 }
 
-//
-// Backspace Function
-//
+/*
+ * Backspace Function
+ */
 function delBack() {
 	let currentDisplayValue = expression.value;
 	let newDisplay = deleteLastCharacter(currentDisplayValue);
