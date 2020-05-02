@@ -10,6 +10,7 @@ let expression = document.getElementById("box"); // this is the placeholder wher
 													// points get added to.
 let operators = [ "*", "/", "+", "-" ]; // valid operator values.
 let operands = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]; // valid operand values.
+let negativeSign = false;
 
 /*
  * add operands, operators, or decimal points
@@ -21,14 +22,25 @@ function addValue(val) {
 	} else if (isOperand(val)) {
 		expression.value += val;
 		operatorMode = false;
-	} else if (isOperator(val) && !operatorMode) {
-		expression.value += val;
+	} else if (isOperator(val) && !operatorMode && negativeSign) {
+		expression.value = expression.value + ")" + val;
 		operatorMode = true;
 		decimalMode = true;
+		negativeSign = false;
 	} else if (isDecimalPoint(val) && decimalMode) {
 		expression.value += val;
 		decimalMode = false;
 		operatorMode = true;
+	} else if (val === "-" && operatorMode && !negativeSign) {
+		expression.value = expression.value + "(" + val;
+		operatorMode = true;
+		decimalMode = true;
+		negativeSign = true;
+	} else if (isOperator(val) && !operatorMode) {
+		expression.value += val;
+		operatorMode = true;
+		decimalMode = true;
+		negativeSign = false;
 	}
 }
 
@@ -46,6 +58,7 @@ function clearAll() {
 	expression.value = "";
 	operatorMode = true;
 	decimalMode = true;
+	negativeSign = false;
 }
 
 /*
@@ -63,7 +76,17 @@ function delBack() {
 		decimalMode = true;
 	} else if (isDecimalPoint(lastCharAfterDelete)) {
 		decimalMode = false;
+		operatorMode = true;
+	} else if (lastCharAfterDelete == "(") {
+		deleteLastCharacter(newDisplay);
+		operatorMode = true;
+		decimalMode = computeIfDecimalMode(newDisplay);
+		negativeSign = false;
+	} else if (lastCharAfterDelete == ")") {
+		deleteLastCharacter(newDisplay);
 		operatorMode = false;
+		decimalMode = computeIfDecimalMode(newDisplay);
+		negativeSign = true;
 	}
 }
 
@@ -77,6 +100,12 @@ function solve() {
 		alert("There is a decimal point in the end!");
 	} else if (isOperator(lastChar)) {
 		alert("There is an operator at the end!");
+	} else if (negativeSign){
+		expression.value = expression.value + ")";
+		display(eval(expression.value))
+		operatorMode = false;
+		decimalMode = false;
+		negativeSign = false;
 	} else {
 		display(eval(expression.value))
 		operatorMode = false;	
