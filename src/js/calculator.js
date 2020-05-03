@@ -25,6 +25,7 @@ function addValue(val) {
 		expression.value += val;
 		operatorMode = false;
 		decimalMode = computeIfDecimalMode(expression.value);
+		negativeSign = checkForNegativeSign(expression.value);
 	} else if (isOperator(val) && !operatorMode && negativeSign) {
 		expression.value = expression.value + ")" + val;
 		operatorMode = true;
@@ -34,6 +35,7 @@ function addValue(val) {
 		expression.value += val;
 		decimalMode = true;
 		operatorMode = true;
+		negativeSign = true;
 	} else if (val === "-" && operatorMode && !negativeSign) {
 		expression.value = expression.value + "(" + val;
 		operatorMode = true;
@@ -72,25 +74,39 @@ function delBack() {
 	let newDisplay = deleteLastCharacter(currentDisplayValue);
 	let lastCharAfterDelete = newDisplay.substr(newDisplay.length - 1, 1);
 	if (isOperand(lastCharAfterDelete)) {
-		operatorMode = false;
+		if (expression.value.length == 0) {
+			operatorMode = true;
+		} else {
+			operatorMode = false;
+		}
 		decimalMode = computeIfDecimalMode(newDisplay);
-	} else if (isOperator(lastCharAfterDelete)) {
+		negativeSign = checkForNegativeSign(newDisplay);
+	} else if (isOperator(lastCharAfterDelete) && checkForNegativeSign(expression.value)) {
+		operatorMode = true;
+		decimalMode = true;
+		negativeSign = true;
+	} else if (isOperator(lastCharAfterDelete) && !checkForNegativeSign(expression.value)){
 		operatorMode = true;
 		decimalMode = true;
 		negativeSign = false;
 	} else if (isDecimalPoint(lastCharAfterDelete)) {
-		decimalMode = false;
+		decimalMode = true;
 		operatorMode = true;
-	} else if (lastCharAfterDelete == "(") {
-		deleteLastCharacter(newDisplay);
-		operatorMode = true;
-		decimalMode = computeIfDecimalMode(newDisplay);
-		negativeSign = false;
-	} else if (lastCharAfterDelete == ")") {
-		deleteLastCharacter(newDisplay);
-		operatorMode = false;
-		decimalMode = computeIfDecimalMode(newDisplay);
 		negativeSign = true;
+	} else if (lastCharAfterDelete === "(") {
+		expression.value = deleteLastCharacter(newDisplay);
+		operatorMode = true;
+		decimalMode = true;
+		negativeSign = false;
+	} else if (lastCharAfterDelete === ")") {
+		expression.value = deleteLastCharacter(newDisplay);
+		operatorMode = false;
+		decimalMode = true;
+		negativeSign = true;
+	} else if (expression.value === "") {
+		operatorMode = true;
+		decimalMode = true;
+		negativeSign = false;
 	}
 }
 
@@ -104,7 +120,9 @@ function solve() {
 		alert("There is a decimal point in the end!");
 	} else if (isOperator(lastChar)) {
 		alert("There is an operator at the end!");
-	} else if (!checkForNegativeSign(expression.value)) {
+	} else if (expression.value == 0) {
+		alert("There is nothing written in the expression.");
+	} else if (checkForNegativeSign(expression.value)) {
 		expression.value = expression.value + ")";
 		display(eval(expression.value))
 		operatorMode = false;
@@ -174,20 +192,20 @@ function checkForNegativeSign(value) {
 	let negativeCount = 0;
 	for (i = value.length - 1; i >= 0; i--) {
 		let evalChar = value.substr(i, 1);
-		let afterOperator = value.substr(i - 1, 1);
-		if (evalChar === "-" && afterOperator === "(") {
+		let beforeOperator = value.substr(i - 1, 1);
+		if (evalChar === "-" && beforeOperator === "(") {
 			negativeCount++;
 			break;
 		} else if (evalChar === "+" || evalChar === "-"
-				&& !afterOperator === "(" || evalChar === "*"
+				&& !beforeOperator === "(" || evalChar === "*"
 				|| evalChar === "/") {
 			break;
 		}
-			
+
 	}
 
 	if (negativeCount == 0)
-		return true;
-	else
 		return false;
+	else
+		return true;
 }
