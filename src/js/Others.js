@@ -20,7 +20,8 @@ function memoryStore() {
 		alert("There is an operator in the expression.");
 	} else if (expression.value.length <= 0) {
 		alert("There is nothing written in the expression.");
-	} else if (!memoryMode && !checkForOperators(expression.value) && !checkForFirstNegativeSign()) {
+	} else if (!memoryMode && !checkForOperators(expression.value)
+			&& !checkForFirstNegativeSign() && !checkForDecimalPoint()) {
 		Memory = expression.value;
 		memoryMode = true;
 		decimalMode = computeIfDecimalMode(expression.value);
@@ -103,7 +104,7 @@ function checkForFirstNegativeSign() {
 }
 
 function checkForDecimalPoint() {
-	let decimalPoint = expression.value.substr(0, 1);
+	let decimalPoint = expression.value.substr(expression.value.length - 1, 1);
 	if (decimalPoint === ".")
 		return true;
 	else
