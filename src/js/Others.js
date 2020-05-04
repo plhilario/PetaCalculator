@@ -27,11 +27,13 @@ function memoryStore() {
 		Memory = expression.value;
 		memoryMode = true;
 		decimalMode = computeIfDecimalMode(expression.value);
+		document.getElementById("box2").value = "Memory: " + Memory;
 	} else if (checkForFirstNegativeSign()) {
 		Memory = expression.value;
 		memoryMode = true;
 		negativeMemory = true;
 		decimalMode = computeIfDecimalMode(expression.value);
+		document.getElementById("box2").value = "Memory: " + Memory;
 	}
 }
 
@@ -41,7 +43,7 @@ function memoryStore() {
 function memoryRecall() {
 	if (!memoryMode) {
 		alert("There is no memory!");
-	} else if (!checkLastCharacter()) {
+	} else if (!checkLastCharacter() && expression.value.length > 0) {
 		alert("Please add an operator before recalling memory.");
 	} else if (expression.value.length + Memory.length >= 15) {
 		alert("Cannot add memory because it would go over 15 characters.");
@@ -49,6 +51,16 @@ function memoryRecall() {
 		alert("The expression ends with a decimal point.");
 	} else if (checkLastCharacter() && isOperator(sign) && negativeSign) {
 		alert("There is a negative sign at the end of the expression.");
+	} else if (expression.value.length == 0 && !negativeMemory) {
+		expression.value += Memory;
+		operatorMode = false;
+		decimalMode = computeIfDecimalMode(expression.value);
+		negativeSign = false;
+	} else if (expression.value.length == 0 && negativeMemory) {
+		expression.value = expression.value + "(" + Memory;
+		operatorMode = false;
+		decimalMode = computeIfDecimalMode(expression.value);
+		negativeSign = true;
 	} else if (checkLastCharacter() && isOperator(sign) && !negativeMemory
 			&& !negativeSign) {
 		expression.value += Memory;
@@ -71,6 +83,7 @@ function memoryCancel() {
 	if (memoryMode) {
 		Memory = "";
 		memoryMode = false;
+		document.getElementById("box2").value = "";
 	} else {
 		alert("There is no memory!");
 	}
