@@ -4,35 +4,39 @@
  * 
  */
 
-let sign;
 let memoryMode = false;
 let Memory;
 let negativeMemory = false;
 
+/*
+ * This function adds numbers into its memory for later purposes.
+ */
 function memoryStore() {
 
 	if (memoryMode) {
 		alert("There is already an expression in the memory.");
 	} else if (!memoryMode && checkForOperators(expression.value)
-			&& !sign === "-") {
+			&& !checkForFirstNegativeSign()) {
 		alert("There is an operator in the expression.");
 	} else if (expression.value.length <= 0) {
 		alert("There is nothing written in the expression.");
-	} else if (!memoryMode && !checkForOperators(expression.value)) {
+	} else if (!memoryMode && !checkForOperators(expression.value) && !checkForFirstNegativeSign()) {
 		Memory = expression.value;
 		memoryMode = true;
-	} else if (!memoryMode && checkForOperators(expression.value)
-			&& sign === "-" && !checkForParentheses(expression.value)) {
+		decimalMode = computeIfDecimalMode(expression.value);
+	} else if (!memoryMode && checkForFirstNegativeSign()) {
 		Memory = expression.value;
 		memoryMode = true;
 		negativeMemory = true;
-	} else if (!memoryMode && checkForOperators(expression.value)
-			&& sign === "-" && checkForParentheses(expression.value)) {
-		alert("There is a parentheses in the expression.");
+		decimalMode = computeIfDecimalMode(expression.value);
+	} else if (!memoryMode && checkForDecimalPoint()) {
+		alert("There is a decimal point at the end of the expression.");
 	}
-
 }
 
+/*
+ * This function adds the memory into the expression itself.
+ */
 function memoryRecall() {
 	if (memoryMode && expression.value.length + Memory.length <= 15
 			&& negativeMemory && operatorMode) {
@@ -58,6 +62,9 @@ function memoryRecall() {
 	}
 }
 
+/*
+ * This function removes the data embedded in the memory.
+ */
 function memoryCancel() {
 	if (memoryMode) {
 		Memory = "";
@@ -67,6 +74,9 @@ function memoryCancel() {
 	}
 }
 
+/*
+ * Checks for an operator
+ */
 function checkForOperators(value) {
 	let operatorCount = 0;
 	for (i = value.length - 1; i >= 0; i--) {
@@ -74,27 +84,29 @@ function checkForOperators(value) {
 		if (evalExpression == "+" || evalExpression == "-"
 				|| evalExpression == "*" || evalExpression == "/") {
 			operatorCount++;
-			sign = evalExpression;
 		}
 	}
 
-	if (operatorCount <= 0)
+	if (operatorCount == 0)
 		return false;
 	else
 		return true;
 }
 
-function checkForParentheses(value) {
-	let parenthesesCount = 0;
-	for (i = value.length - 1; i >= 0; i--) {
-		let evalExpression = value.substr(i, 1);
-		if (evalExpression == "(" || evalExpression == ")") {
-			parenthesesCount++;
-		}
-	}
-
-	if (parenthesesCount <= 0)
-		return false;
-	else
+function checkForFirstNegativeSign() {
+	let firstNegativeSign = expression.value.substr(0, 1);
+	if (firstNegativeSign === "-")
 		return true;
+	else
+		return false;
+
+}
+
+function checkForDecimalPoint() {
+	let decimalPoint = expression.value.substr(0, 1);
+	if (decimalPoint === ".")
+		return true;
+	else
+		return false;
+
 }
