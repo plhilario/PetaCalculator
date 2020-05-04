@@ -81,11 +81,13 @@ function delBack() {
 		}
 		decimalMode = computeIfDecimalMode(newDisplay);
 		negativeSign = checkForNegativeSign(newDisplay);
-	} else if (isOperator(lastCharAfterDelete) && checkForNegativeSign(expression.value)) {
+	} else if (isOperator(lastCharAfterDelete)
+			&& checkForNegativeSign(expression.value)) {
 		operatorMode = true;
 		decimalMode = true;
 		negativeSign = true;
-	} else if (isOperator(lastCharAfterDelete) && !checkForNegativeSign(expression.value)){
+	} else if (isOperator(lastCharAfterDelete)
+			&& !checkForNegativeSign(expression.value)) {
 		operatorMode = true;
 		decimalMode = true;
 		negativeSign = false;

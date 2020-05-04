@@ -1,12 +1,11 @@
 /*
  * This file contains the javascript functions for the 
  * add-on features in the calculator. 
- * 
  */
 
-let memoryMode = false;
-let Memory;
-let negativeMemory = false;
+let memoryMode = false; // lets the memory buttons decide to cache the given expression. 
+let Memory; // the variable where the expression is stored.
+let negativeMemory = false; // used if the memory is a negative operand.
 
 /*
  * This function adds numbers into its memory for later purposes.
@@ -15,23 +14,21 @@ function memoryStore() {
 
 	if (memoryMode) {
 		alert("There is already an expression in the memory.");
-	} else if (!memoryMode && checkForOperators(expression.value)
-			&& !checkForFirstNegativeSign()) {
+	} else if (checkForOperators(expression.value) && !checkForFirstNegativeSign()) {
 		alert("There is an operator in the expression.");
 	} else if (expression.value.length <= 0) {
 		alert("There is nothing written in the expression.");
-	} else if (!memoryMode && !checkForOperators(expression.value)
-			&& !checkForFirstNegativeSign() && !checkForDecimalPoint()) {
+	} else if (!checkForOperators(expression.value) && !checkForFirstNegativeSign() && !checkLastCharacter()) {
 		Memory = expression.value;
 		memoryMode = true;
 		decimalMode = computeIfDecimalMode(expression.value);
-	} else if (!memoryMode && checkForFirstNegativeSign()) {
+	} else if (checkForFirstNegativeSign()) {
 		Memory = expression.value;
 		memoryMode = true;
 		negativeMemory = true;
 		decimalMode = computeIfDecimalMode(expression.value);
-	} else if (!memoryMode && checkForDecimalPoint()) {
-		alert("There is a decimal point at the end of the expression.");
+	} else if (checkLastCharacter()) {
+		alert("There is a decimal point or operator at the end of the expression.");
 	}
 }
 
@@ -39,27 +36,12 @@ function memoryStore() {
  * This function adds the memory into the expression itself.
  */
 function memoryRecall() {
-	if (memoryMode && expression.value.length + Memory.length <= 15
-			&& negativeMemory && operatorMode) {
-		expression.value = expression.value + "(" + Memory;
-		negativeSign = true;
-		operatorMode = true;
-		decimalMode = true;
-	} else if (memoryMode && expression.value.length + Memory.length <= 15
-			&& !negativeMemory && !computeIfDecimalMode) {
-		expression.value += Memory;
-		operatorMode = true;
-		decimalMode = computeIfDecimalMode(expression.value);
-		negativeSign = false;
-	} else if (memoryMode && expression.value.length + Memory.length >= 15) {
-		alert("Cannot add memory: character limit would be over 15!");
-	} else if (!memoryMode) {
+	if (!memoryMode) {
 		alert("There is no memory!");
-	} else if (memoryMode && expression.value.length + Memory.length <= 15
-			&& negativeMemory && !operatorMode) {
-		alert("Put an operator before recalling memory.");
-	} else if (computeIfDecimalMode) {
-		alert("Put an operator before recalling memory.")
+	} else if (!checkLastCharacter()) {
+		alert("Please add an operator before recalling memory.");
+	} else if (checkLastCharacter()) {
+		expression.value += Memory;
 	}
 }
 
@@ -70,7 +52,7 @@ function memoryCancel() {
 	if (memoryMode) {
 		Memory = "";
 		memoryMode = false;
-	} else if (!memoryMode) {
+	} else {
 		alert("There is no memory!");
 	}
 }
@@ -94,6 +76,9 @@ function checkForOperators(value) {
 		return true;
 }
 
+/*
+ * Checks if the first character in the expression is a negative sign.
+ */
 function checkForFirstNegativeSign() {
 	let firstNegativeSign = expression.value.substr(0, 1);
 	if (firstNegativeSign === "-")
@@ -103,11 +88,18 @@ function checkForFirstNegativeSign() {
 
 }
 
-function checkForDecimalPoint() {
-	let decimalPoint = expression.value.substr(expression.value.length - 1, 1);
-	if (decimalPoint === ".")
+/*
+ * Checks for the last character in the expression if it's either a decimal
+ * point or operator.
+ */
+function checkLastCharacter() {
+	let lastChar = expression.value.substr(expression.value.length - 1, 1);
+	if (lastChar === ".") {
 		return true;
-	else
+	} else if (lastChar === "+" || lastChar === "-" || lastChar === "*"
+			|| lastChar === "/") {
+		return true;
+	} else {
 		return false;
-
+	}
 }
