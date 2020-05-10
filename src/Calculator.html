@@ -14,15 +14,15 @@
  </div>
 	</div>
 	<div class = "container">
-	<div class = "row no-gutters">
-	<div class = "col col-lg-4">
+	<div class = "row">
+	<div class = "col col-xl-3">
 	<h2>Other buttons: </h2>
 	<button class = "btn border-0 shadow-sm memory-buttons" onclick = "memoryStore()">MS</button>
 	<button class = "btn border-0 shadow-sm memory-buttons" onclick = "memoryRecall()">MR</button>
 	<button class = "btn border-0 shadow-sm memory-buttons" onclick = "memoryCancel()">MC</button>
 	<input class = "shadow-sm m-2 font-weight-bold" id = "box2" disabled>
 	</div>
-	<div class = "col col-lg-4">
+	<div class = "col col-xl-3">
 	<table class = "shadow-lg">
 		<tbody>
 			<tr>
@@ -59,24 +59,31 @@
 		</tbody>
 	</table>
 	</div>
-	<div class = "col-lg-4 features font-italic">
+	<div class = "col-xl-3 features">
 		<h2>Functional Features:</h2>
-		<ol class = "list">
-			<li>Does not allow pressing of operator multiple times.</li>
+		<ol class = "list font-italic text-left">
+			<li>Does not allow pressing of operators multiple times.</li>
 			<li>Does not allow pressing of decimal point multiple times.</li>
 			<li>Does not allow 15 characters in expression.</li>
 			<li>Will not compute expression if the last character is an operator.</li>
 			<li>Will not compute expression if the last character is a decimal point.</li>
+			<li>Can use integers in the expression.</li>
 			<li>Del button keeps track of the expression's state.</li>
+			<li>Capable of handling memory.</li>
 		</ol>
-		<h2>Cosmetic Features:</h2>
-		<ol class = "list">	
+	</div>
+	<div class = "col-xl-3 features">
+	<h2>Cosmetic Features:</h2>
+		<ol class = "list font-italic text-left">	
 			<li>When cursor hovers over specific buttons, there will be a change in color.</li>
 			<li>There are shadows over the buttons.</li>
+			<li>Displays what is in memory.</li>
+			<li>When resolution of the browser changes, the content of the html changes.
 		</ol>
 	</div>
 	</div>
 	</div>
+	<script src = "js/evaluatingFunctions.js" type = "text/javascript"></script>
 	<script src = "js/calculator.js" type = "text/javascript"></script>
 	<script src = "js/Others.js" type = "text/javascript"></script>
 	</body>
